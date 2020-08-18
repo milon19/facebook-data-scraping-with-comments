@@ -1,4 +1,4 @@
-.idea
-__pychahe__
+.idea/
+__pycache__/
 facebook_data.txt
 testing.html
