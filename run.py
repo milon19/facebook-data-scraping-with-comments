@@ -12,7 +12,7 @@ def write_data(raw_data):
 
 def main():
     login(EMAIL, PASSWORD)
-    raw_data = extract_data(PAGE_LINKS, numOfScroll=3, grab_comment=True)
+    raw_data = extract_data(PAGE_LINKS, numOfScroll=numOfScroll, grab_comment=grab_comment)
     write_data(raw_data)
 
 if __name__ == "__main__":

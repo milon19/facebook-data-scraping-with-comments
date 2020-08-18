@@ -107,13 +107,16 @@ def _find_post_comments(content):
     return postComments
 
 
-def _extract_post(data):
+def _extract_post(data, grab_comment):
     user_contents = data.find_all(class_="_5pcr userContentWrapper")
     extracted_posts = []
     for content in user_contents:
         post_text = _find_post_text(content)
         post_id = _find_post_id(content)
-        post_comments = _find_post_comments(content)
+        if grab_comment:
+            post_comments = _find_post_comments(content)
+        else:
+            post_comments = []
         post = {
             'post_id': post_id,
             'post_text': post_text,
@@ -168,8 +171,13 @@ def extract_data(pages, numOfScroll=3, grab_comment=False):
                         pass
 
             moreComments = browser.find_elements_by_xpath('//a[@class="_4sxc _42ft"]')
-            print("Scrolling through to click on more comments")
+            print("Scrolling through to click on more comments..")
+            print("It may takes time please wait...")
+            i = 0
             while len(moreComments) != 0:
+                if i % 5 == 0:
+                    print("It may takes time please wait...")
+                i += 1
                 for moreComment in moreComments:
                     action = webdriver.common.action_chains.ActionChains(browser)
                     try:
@@ -188,7 +196,7 @@ def extract_data(pages, numOfScroll=3, grab_comment=False):
         BS_data = BeautifulSoup(page_source, 'html.parser')
         page_name = _find_page_name(BS_data)
 
-        posts = _extract_post(BS_data)
+        posts = _extract_post(BS_data, grab_comment)
         page = {
             'page_name': page_name,
             'posts': posts,
