@@ -1,5 +1,5 @@
-_USERNAME = ''
-_PASSWORD = ''
+_USERNAME = 'abc'
+_PASSWORD = 'abc'
 
 def get_username():
     return _USERNAME

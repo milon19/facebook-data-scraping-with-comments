@@ -63,10 +63,10 @@ def _find_post_comments(content):
     if commentList:
         comment = commentList.find_all('li')
         if comment:
-            a_Comment = {}
             for li in comment:
                 comment_div = li.find(attrs={"aria-label": "Comment"})
                 if comment_div:
+                    print(comment_div)
                     comment_author = comment_div.find(class_="_6qw4").text
                     comment_text_span = comment_div.find("span", class_="_3l3x")
                     comment_text = ''
@@ -77,12 +77,12 @@ def _find_post_comments(content):
                     repliesList = li.find(class_="_2h2j")
                     if repliesList:
                         reply = repliesList.find_all('li')
+
                         if reply:
-                            a_reply = {}
                             for li in reply:
                                 reply_comment_div = li.find(attrs={"aria-label": "Comment reply"})
-
                                 if reply_comment_div:
+                                    print('->>> {}'.format(li))
                                     reply_author = reply_comment_div.find(class_="_6qw4").text
 
                                     reply_text_span = reply_comment_div.find("span", class_="_3l3x")
@@ -95,14 +95,12 @@ def _find_post_comments(content):
                                         'reply_text': reply_text,
                                     }
                                     replies.append(a_reply)
-
                     a_Comment = {
                         'comment_author': comment_author,
                         'comment_text': comment_text,
                         'replies': replies,
                     }
-
-                postComments.append(a_Comment)
+                    postComments.append(a_Comment)
 
     return postComments
 
